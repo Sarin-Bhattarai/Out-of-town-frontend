@@ -19,6 +19,20 @@ body {
   margin: auto;
 }
 
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.topMargin {
+  margin-top: 5%;
+}
+
+h3 {
+  font-size: 25px;
+  color: #fb8a57;
+}
+
 ul {
   list-style: none;
 }
@@ -29,5 +43,11 @@ a {
 }
 
 /* --------------Responsive--------------  */
+
+@media screen and (max-width: 991px) {
+  .home-grid {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+}
 
 /* --------------Responsive--------------  */
