@@ -15,6 +15,39 @@
   object-fit: contain;
 }
 
+.box h4 {
+  font-size: 27px;
+  margin-bottom: 15px;
+}
+
 .home-image-details {
+  padding: 22px;
+}
+
+.home-paragraph {
+  text-align: justify;
+  line-height: 32px;
+  font-weight: 500;
+}
+
+.sg-row {
+  margin-bottom: 30px;
+}
+
+.box p {
+  text-align: justify;
+  color: #fff;
+}
+
+.sg-row span {
+  font-size: 35px;
+}
+
+.home-third {
+  margin-bottom: 18px;
+}
+
+#box90 {
+  background-color: #08071c;
   padding: 22px;
 }

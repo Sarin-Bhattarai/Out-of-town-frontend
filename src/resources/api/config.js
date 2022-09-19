@@ -1,1 +1,1 @@
-export const BaseUrl = process.env.BASE_URL;
+export const BaseUrl = "https://out-of-town.herokuapp.com/api";

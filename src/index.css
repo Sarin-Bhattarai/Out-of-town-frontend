@@ -48,6 +48,10 @@ a {
   .home-grid {
     grid-template-columns: repeat(1, 1fr) !important;
   }
+
+  .footer-grid {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
 }
 
 /* --------------Responsive--------------  */
