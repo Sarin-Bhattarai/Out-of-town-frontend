@@ -91,7 +91,11 @@ const Home = () => {
                   <br /> Explore Hidden Beauty
                   <br /> of Nature.
                 </h4>
-                <p>
+                <p
+                  style={{
+                    textAlign: "justify",
+                  }}
+                >
                   Nepal is a country of enchanting natural beauty with
                   mesmerizing views of the Himalayas where eight out of ten
                   highest peak on the Earth including Mount Everest (height:
@@ -110,15 +114,19 @@ const Home = () => {
                   <div className="sg-row">
                     <h3>Trekking</h3>
                     <p style={{ color: "black" }}>
-                      Sample text. Click to select the textbox. Click again or
-                      double click to start editing the text.
+                      Trekking could be a motive, It could be a commitment, an
+                      aim, an objective, a mission, a party, a social gathering.
+                      It could be a place where you find friends, and it could
+                      be a journey.
                     </p>
                   </div>
                   <div className="sg-row">
                     <h3>Tour package</h3>
                     <p style={{ color: "black" }}>
-                      Sample text. Click to select the textbox. Click again or
-                      double click to start editing the text.
+                      An all-inclusive package offered by either a local
+                      entrepreneur or a foreign tour operator consisting of,
+                      amongst others, transport, accommodation, meals, guided
+                      tours and excursions.
                     </p>
                   </div>
                 </div>
@@ -126,15 +134,19 @@ const Home = () => {
                   <div className="sg-row">
                     <h3>Hiking & Homestay</h3>
                     <p style={{ color: "black" }}>
-                      Sample text. Click to select the textbox. Click again or
-                      double click to start editing the text.
+                      All Nepal Hiking has explored some rare hiking routes
+                      around the middle and western parts of Nepal. Our Chairman
+                      has discovered some hidden villages with lots of tourist
+                      potential.
                     </p>
                   </div>
                   <div className="sg-row">
                     <h3>Sightseeing</h3>
                     <p style={{ color: "black" }}>
-                      Sample text. Click to select the textbox. Click again or
-                      double click to start editing the text.
+                      As a broad definition, tourist attractions are those
+                      places of culture, heritage, nature, or activities that
+                      draw people to visit. We make sure that you have the best
+                      view of every place you go.
                     </p>
                   </div>
                 </div>

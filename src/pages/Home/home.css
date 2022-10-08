@@ -1,5 +1,6 @@
 .home {
   min-height: 90vh;
+  margin-top: 20px;
 }
 
 .home-grid {
@@ -35,7 +36,6 @@
 }
 
 .box p {
-  text-align: justify;
   color: #fff;
 }
 

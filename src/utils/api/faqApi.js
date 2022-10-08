@@ -1,9 +1,9 @@
 import axios from "axios";
 import { BaseUrl } from "../../resources/api/config";
 
-export const getHomeDesc = () => {
+export const getFaq = () => {
   return axios({
-    url: `${BaseUrl}/descs`,
+    url: `${BaseUrl}/faqs`,
     method: "GET",
   });
 };
