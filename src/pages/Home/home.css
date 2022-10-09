@@ -26,9 +26,10 @@
 }
 
 .home-paragraph {
-  text-align: justify;
-  line-height: 32px;
-  font-weight: 500;
+  text-align: justify !important;
+  line-height: 32px !important;
+  font-weight: 400 !important;
+  font-size: 16px !important;
 }
 
 .sg-row {

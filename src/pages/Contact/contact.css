@@ -1,0 +1,14 @@
+.contact {
+  min-height: 90vh;
+  margin-top: 20px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 30px;
+}
+
+.book-section {
+  margin-top: 20px;
+}

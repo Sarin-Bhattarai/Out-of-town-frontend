@@ -89,9 +89,7 @@ const Dashboard = () => {
               navigate(e.key);
             }}
             items={items}
-          >
-            <Menu.Item></Menu.Item>
-          </Menu>
+          />
         </div>
       </Sider>
       <Content className="main-content">

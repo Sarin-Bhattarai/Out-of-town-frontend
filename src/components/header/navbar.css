@@ -12,9 +12,10 @@ header ul li {
 }
 
 header ul li a {
-  font-weight: bold;
+  font-weight: 600;
   color: #000;
   transition: 0.5s;
+  font-size: 16px;
 }
 
 header ul li a:hover {
@@ -64,7 +65,7 @@ header.active {
     top: 75px;
     transition: 0.5s;
     width: 80%;
-    height: 52vh;
+    height: 45vh;
     z-index: 5;
   }
 

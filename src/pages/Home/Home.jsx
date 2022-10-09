@@ -32,7 +32,7 @@ const Home = () => {
               <h4
                 style={{
                   fontSize: "60px",
-                  fontWeight: "bold",
+                  fontWeight: "500",
                   marginBottom: "15px",
                 }}
               >
@@ -84,6 +84,7 @@ const Home = () => {
                 <h4
                   style={{
                     color: "white",
+                    fontSize: "30px",
                   }}
                 >
                   Travel with us to
@@ -94,6 +95,8 @@ const Home = () => {
                 <p
                   style={{
                     textAlign: "justify",
+                    lineHeight: "32px",
+                    fontSize: "16px",
                   }}
                 >
                   Nepal is a country of enchanting natural beauty with
@@ -113,7 +116,13 @@ const Home = () => {
                 <div className="home-grid">
                   <div className="sg-row">
                     <h3>Trekking</h3>
-                    <p style={{ color: "black" }}>
+                    <p
+                      style={{
+                        color: "black",
+                        lineHeight: "27px",
+                        fontSize: "16px",
+                      }}
+                    >
                       Trekking could be a motive, It could be a commitment, an
                       aim, an objective, a mission, a party, a social gathering.
                       It could be a place where you find friends, and it could
@@ -122,7 +131,13 @@ const Home = () => {
                   </div>
                   <div className="sg-row">
                     <h3>Tour package</h3>
-                    <p style={{ color: "black" }}>
+                    <p
+                      style={{
+                        color: "black",
+                        lineHeight: "27px",
+                        fontSize: "16px",
+                      }}
+                    >
                       An all-inclusive package offered by either a local
                       entrepreneur or a foreign tour operator consisting of,
                       amongst others, transport, accommodation, meals, guided
@@ -133,7 +148,13 @@ const Home = () => {
                 <div className="home-grid">
                   <div className="sg-row">
                     <h3>Hiking & Homestay</h3>
-                    <p style={{ color: "black" }}>
+                    <p
+                      style={{
+                        color: "black",
+                        lineHeight: "27px",
+                        fontSize: "16px",
+                      }}
+                    >
                       All Nepal Hiking has explored some rare hiking routes
                       around the middle and western parts of Nepal. Our Chairman
                       has discovered some hidden villages with lots of tourist
@@ -142,7 +163,13 @@ const Home = () => {
                   </div>
                   <div className="sg-row">
                     <h3>Sightseeing</h3>
-                    <p style={{ color: "black" }}>
+                    <p
+                      style={{
+                        color: "black",
+                        lineHeight: "27px",
+                        fontSize: "16px",
+                      }}
+                    >
                       As a broad definition, tourist attractions are those
                       places of culture, heritage, nature, or activities that
                       draw people to visit. We make sure that you have the best
