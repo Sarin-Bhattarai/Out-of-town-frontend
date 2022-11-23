@@ -9,7 +9,10 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Services from "./pages/Social-Services/Services";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Footer from "./components/footer/Footer";
+import Loading from "./components/loader/Loading";
+import { Spin } from "antd";
 
+// Spin.setDefaultIndicator(<Loading />);
 const App = () => {
   return (
     <>
@@ -81,7 +84,7 @@ const App = () => {
               </>
             }
           />
-          <Route path="/api/dashboard" exact element={<Dashboard />} />
+          <Route path="/*" exact element={<Dashboard />} />
         </Routes>
       </Router>
     </>

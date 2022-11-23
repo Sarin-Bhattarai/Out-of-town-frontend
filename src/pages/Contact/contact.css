@@ -1,5 +1,5 @@
 .contact {
-  min-height: 90vh;
+  min-height: 100vh;
   margin-top: 20px;
 }
 
@@ -11,4 +11,59 @@
 
 .book-section {
   margin-top: 20px;
+  padding: 22px;
+  border-radius: 40px;
+  background-color: #fb8a57;
+  box-shadow: 2px 7px 25px 15px rgb(0 0 0 / 5%);
+  -webkit-box-shadow: 2px 7px 25px 15px rgb(0 0 0 / 5%);
+  -moz-box-shadow: 2px 7px 25px 15px rgba(0, 0, 0, 0.05);
+}
+
+.ant-col .ant-form-item-label {
+  color: #fff !important;
+}
+
+.contact-section {
+  margin-top: 29px;
+}
+
+.embed-responsive-item {
+  border-radius: 10px;
+  border: none;
+}
+
+.sub-message {
+  opacity: 0.9;
+  font-size: 11px;
+  margin-left: 10px;
+}
+
+.ant-select-selector,
+.ant-picker,
+input[type="text"] {
+  border-radius: 5px !important;
+}
+
+.contact-info {
+  margin-top: 8%;
+  background-color: #08071c;
+  padding: 22px;
+  /* margin-left: 5%; */
+  border-radius: 5px;
+}
+
+.contact-info p {
+  color: #fff;
+  opacity: 0.9;
+  font-size: 16px;
+}
+
+.contact-icon {
+  color: #fff;
+  margin-top: 5px;
+}
+
+.contact-info h1 {
+  color: #fff;
+  font-size: 22px;
 }

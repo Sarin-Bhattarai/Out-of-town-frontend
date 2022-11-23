@@ -11,6 +11,7 @@ import {
   MdReorder,
   MdVerified,
 } from "react-icons/md";
+import HomeDesc from "./homeDesc/HomeDesc";
 
 const { Sider, Content } = Layout;
 const Dashboard = () => {
@@ -23,7 +24,7 @@ const Dashboard = () => {
 
   const items = [
     {
-      key: "/dashboard/homeDesc",
+      key: "/api/dashboard/homeDesc",
       icon: <MdOutlineWindow />,
       label: "Home Description",
     },
@@ -94,7 +95,7 @@ const Dashboard = () => {
       </Sider>
       <Content className="main-content">
         <Routes>
-          <Route />
+          <Route path="/api/dashboard/homeDesc" element={<HomeDesc />} />
         </Routes>
       </Content>
     </Layout>

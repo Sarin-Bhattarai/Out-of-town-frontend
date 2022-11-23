@@ -15,7 +15,7 @@ body {
 }
 
 .container {
-  max-width: 1080px;
+  max-width: 1180px;
   margin: auto;
 }
 
@@ -40,6 +40,14 @@ ul {
 a {
   text-decoration: none;
   color: #000;
+}
+
+.ant-form-item-explain-error {
+  color: #fff !important;
+}
+
+.ant-form-item-required {
+  color: #fff !important;
 }
 
 /* --------------Dashboard--------------  */
@@ -91,6 +99,10 @@ svg.ant-menu-item-icon {
   margin-right: 10px !important;
 }
 
+svg {
+  cursor: pointer !important;
+}
+
 .main-content {
   background-color: #f2f6fc !important;
   padding: 10px !important;
@@ -106,6 +118,10 @@ svg.ant-menu-item-icon {
   }
 
   .footer-grid {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+
+  .contact-grid {
     grid-template-columns: repeat(1, 1fr) !important;
   }
 }
