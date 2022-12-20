@@ -1,0 +1,30 @@
+.subregion {
+  min-height: 90vh;
+  margin-top: 20px;
+}
+
+.subregion-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr) !important;
+}
+
+.s-region {
+  margin-top: 5%;
+}
+
+.subregion-grid {
+  margin-bottom: 80px;
+}
+
+.subregion-grid p {
+  font-size: 20px;
+  margin-left: 7%;
+  margin-right: 7%;
+  text-align: justify;
+}
+
+.subregion-grid-img {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+}

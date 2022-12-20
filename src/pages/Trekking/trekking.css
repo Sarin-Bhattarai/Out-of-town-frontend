@@ -1,0 +1,59 @@
+.trekking {
+  min-height: 90vh;
+  margin-top: 20px;
+}
+
+.trekking-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+}
+
+.grid-details {
+  margin-top: 50px;
+}
+
+.grid-details h1 {
+  margin-top: 10px;
+  font-weight: 400;
+  font-size: 28px;
+}
+
+.grid-details p {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.select-btn {
+  padding: 8px 24px;
+  background-color: #674bae;
+  border: 1px solid #674bae;
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+  cursor: pointer;
+}
+
+.package-list {
+  margin-top: 8%;
+}
+
+.package-list p {
+  font-size: 18px;
+}
+
+.package-list span {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.details li {
+  margin-left: 12px !important;
+  margin-top: 10px;
+  font-size: 17px;
+}
+
+.showImage img {
+  width: 360px;
+  height: 220px;
+}

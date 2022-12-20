@@ -42,13 +42,68 @@ a {
   color: #000;
 }
 
-.ant-form-item-explain-error {
-  color: #fff !important;
+/* --------------Loader--------------  */
+
+.spinner {
+  width: 300px;
+  height: 300px;
+  display: flex !important;
+  position: absolute;
+  left: 45%;
+  top: 48%;
+  background-color: transparent;
 }
 
-.ant-form-item-required {
-  color: #fff !important;
+.spinner span {
+  font-size: 2rem;
+  animation: fade 1s linear 0s infinite;
+  padding-right: 1rem;
 }
+
+.half-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid #fb8a57;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.5s linear 0s infinite;
+}
+
+.completed {
+  font-size: 2rem;
+  color: #03fc4e;
+
+  animation: bigger 1s linear;
+}
+
+@keyframes bigger {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(2);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* --------------Loader--------------  */
 
 /* --------------Dashboard--------------  */
 
@@ -94,6 +149,14 @@ li.ant-menu-item:hover {
   color: black !important;
 }
 
+.ant-form-item-explain-error {
+  color: #fff !important;
+}
+
+.ant-form-item-required {
+  color: #fff !important;
+}
+
 svg.ant-menu-item-icon {
   font-weight: bold !important;
   margin-right: 10px !important;
@@ -122,6 +185,14 @@ svg {
   }
 
   .contact-grid {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+
+  .trekking-grid {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+
+  .subregion-grid-img {
     grid-template-columns: repeat(1, 1fr) !important;
   }
 }

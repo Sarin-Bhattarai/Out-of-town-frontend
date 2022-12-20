@@ -394,50 +394,36 @@ const Contact = () => {
                 >
                   <Input placeholder="Your email" />
                 </Form.Item>
-                <Row
-                  style={{
-                    gap: "1rem",
-                  }}
+
+                <Form.Item
+                  label="No of people"
+                  name="num of people"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input number of people!",
+                    },
+                  ]}
                 >
-                  <Form.Item
-                    label="No of people"
-                    name="num of people"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input number of people!",
-                      },
-                    ]}
-                  >
-                    <Input
-                      type="number"
-                      min="1"
-                      max="100"
-                      placeholder="No of people"
-                      style={{
-                        borderRadius: "5px",
-                        width: "16rem",
-                      }}
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    label="Contact number"
-                    name="contact number"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your contact number!",
-                      },
-                    ]}
-                  >
-                    <Input
-                      style={{
-                        width: "16rem",
-                      }}
-                      placeholder="Your contact number"
-                    />
-                  </Form.Item>
-                </Row>
+                  <Input
+                    type="number"
+                    min="1"
+                    max="100"
+                    placeholder="No of people"
+                  />
+                </Form.Item>
+                <Form.Item
+                  label="Contact number"
+                  name="contact number"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your contact number!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Your contact number" />
+                </Form.Item>
 
                 <Form.Item
                   label="Trekking region"
@@ -507,7 +493,7 @@ const Contact = () => {
               <div class="embed-responsive">
                 <iframe
                   title=" "
-                  height="620px"
+                  height="700px"
                   width="110%"
                   className="embed-responsive-item"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1618.3845444618014!2d83.95955936943169!3d28.2170399212728!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3995956234c35749%3A0x1d62cdd8fecab286!2sOut%20of%20Town%20Adventure%20Pvt.%20Ltd!5e0!3m2!1sen!2snp!4v1659759531597!5m2!1sen!2snp"
