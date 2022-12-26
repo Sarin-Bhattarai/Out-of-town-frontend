@@ -1,0 +1,9 @@
+.services {
+  min-height: 90vh;
+  margin-top: 20px;
+}
+
+.serviceImage img {
+  width: 360px;
+  height: 280px;
+}

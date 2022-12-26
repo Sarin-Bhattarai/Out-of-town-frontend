@@ -1,13 +1,13 @@
 import React from "react";
 const URL = "http://localhost:4000/";
 
-const ShowImage = ({ region, url }) => {
+const ServiceImage = ({ region, url }) => {
   // console.log(region);
   return (
-    <div className="showImage">
+    <div className="serviceImage">
       <img src={`${URL}${region}`} alt={region?.title} />
     </div>
   );
 };
 
-export default ShowImage;
+export default ServiceImage;

@@ -5,4 +5,50 @@
 
 .team-details {
   margin-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 40px;
+}
+
+.teamImage img {
+  width: 280px;
+  height: 280px;
+  border-radius: 100%;
+  margin-bottom: 10px;
+  border: 3px solid #fb8a57;
+}
+
+.team-grid {
+  text-align: center;
+}
+
+.team-grid h1 {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.team-grid p {
+  font-size: 18px;
+}
+
+.terms {
+  margin-top: 6%;
+}
+
+.conditions p {
+  font-size: 17px;
+  text-align: justify;
+  line-height: 32px;
+}
+
+.ul-team {
+  list-style: disc;
+  margin-left: 13px;
+  font-size: 17px;
+  text-align: justify;
+  line-height: 32px;
+}
+
+.ul-team li {
+  margin-bottom: 20px !important;
 }

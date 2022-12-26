@@ -20,8 +20,6 @@ const SubRegion = () => {
     fetchSubRegions();
   }, []);
 
-  console.log(state);
-
   return (
     <section className="subregion">
       <div className="container">
@@ -40,9 +38,36 @@ const SubRegion = () => {
                   </h1>
                   <p>{sr?.description}</p>
                   <div className="subregion-grid-img">
-                    {/* <ShowImage region={sr?.image?.[0]} url="uploads" />
+                    <ShowImage region={sr?.image?.[0]} url="uploads" />
                     <ShowImage region={sr?.image?.[1]} url="uploads" />
-                    <ShowImage region={sr?.image?.[2]} url="uploads" /> */}
+                    <ShowImage region={sr?.image?.[2]} url="uploads" />
+                  </div>
+
+                  <div className="region-row">
+                    <div>
+                      <h3
+                        style={{
+                          fontSize: "28px",
+                          fontWeight: "400",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        Including during the period
+                      </h3>
+                      <p>{sr?.includedetails}</p>
+                    </div>
+                    <div>
+                      <h3
+                        style={{
+                          fontSize: "28px",
+                          fontWeight: "400",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        Cost excludes
+                      </h3>
+                      <p>{sr?.excludedetails}</p>
+                    </div>
                   </div>
                 </div>
               </>

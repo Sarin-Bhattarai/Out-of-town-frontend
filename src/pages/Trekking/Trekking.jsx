@@ -2,13 +2,14 @@ import "./trekking.css";
 import React, { useState, useEffect } from "react";
 import { getRegion } from "../../utils/api/regionApi";
 import ShowImage from "../../utils/data/showImage";
+import { useNavigate } from "react-router-dom";
 
 const Trekking = () => {
   const [state, setState] = useState({
     regions: [],
     error: null,
   });
-
+  const navigate = useNavigate();
   const fetchRegions = () => {
     setState({ ...state, error: null });
     getRegion()
@@ -42,7 +43,14 @@ const Trekking = () => {
                   <ShowImage region={r?.image} url="uploads" />
                   <h1>{r?.title}</h1>
                   <p>{r?.description}</p>
-                  <button className="select-btn">SELECT</button>
+                  <button
+                    onClick={() => {
+                      navigate("/trekking/subRegions");
+                    }}
+                    className="select-btn"
+                  >
+                    SELECT
+                  </button>
                 </div>
               </>
             );

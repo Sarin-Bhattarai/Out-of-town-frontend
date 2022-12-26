@@ -8,7 +8,7 @@ const Navbar = () => {
   const [sidebar, setSidebar] = useState(false);
   window.addEventListener("scroll", function () {
     const header = document.querySelector(".header");
-    header.classList.toggle("active", window.scrollY > 150);
+    header?.classList?.toggle("active", window.scrollY > 150);
   });
   return (
     <>

@@ -42,6 +42,11 @@ a {
   color: #000;
 }
 
+.dashboard-container {
+  margin-left: 30px;
+  margin-top: 30px;
+}
+
 /* --------------Loader--------------  */
 
 .spinner {
@@ -194,6 +199,19 @@ svg {
 
   .subregion-grid-img {
     grid-template-columns: repeat(1, 1fr) !important;
+  }
+
+  .team-details {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+
+  .region-row {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+
+  .showImage img {
+    width: 100% !important;
+    height: 100% !important;
   }
 }
 

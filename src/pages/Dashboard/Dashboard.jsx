@@ -12,6 +12,7 @@ import {
   MdVerified,
 } from "react-icons/md";
 import HomeDesc from "./homeDesc/HomeDesc";
+import Afaq from "./Faq/Afaq";
 
 const { Sider, Content } = Layout;
 const Dashboard = () => {
@@ -29,7 +30,7 @@ const Dashboard = () => {
       label: "Home Description",
     },
     {
-      key: "/dashboard/faq",
+      key: "/api/dashboard/faq",
       icon: <MdOutlineArrowForward />,
       label: "Faq",
     },
@@ -95,7 +96,9 @@ const Dashboard = () => {
       </Sider>
       <Content className="main-content">
         <Routes>
+          <Route path="/api/dashboard" element={<HomeDesc />} />
           <Route path="/api/dashboard/homeDesc" element={<HomeDesc />} />
+          <Route path="/api/dashboard/faq" element={<Afaq />} />
         </Routes>
       </Content>
     </Layout>
