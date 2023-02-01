@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
-import "./afaq.css";
 import Admin from "../../../resources/images/admin.jpg";
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
-import { getFaq } from "../../../utils/api/faqApi";
-import { Row, Button, Modal, Table, message, Space, Input } from "antd";
+import { Row, Button, Modal, Table, message, Space, Input, Upload } from "antd";
+import { AiFillEdit, AiFillDelete, AiOutlineUpload } from "react-icons/ai";
+import { getRegion } from "../../../utils/api/regionApi";
+import ShowImage from "../../../utils/data/showImage";
 const { TextArea } = Input;
 
-const Afaq = () => {
+const Aregion = () => {
   const [state, setState] = useState({
-    faqs: [],
+    regions: [],
     error: null,
     modalVisible: false,
   });
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
@@ -22,6 +21,13 @@ const Afaq = () => {
   };
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+
+  const fetchRegions = () => {
+    setState({ ...state, error: null });
+    getRegion()
+      .then(({ data }) => setState({ ...state, regions: data, error: null }))
+      .catch({ ...state, error: null });
   };
 
   const columns = [
@@ -45,6 +51,13 @@ const Afaq = () => {
           {text}
         </p>
       ),
+    },
+
+    {
+      title: "Image",
+      dataIndex: "image",
+      key: "image",
+      render: (image) => <div>{image}</div>,
     },
 
     {
@@ -72,7 +85,7 @@ const Afaq = () => {
               />
             </Button>
             <Modal
-              title="Edit Faq"
+              title="Edit Region"
               okText="Edit"
               style={{ top: 20 }}
               visible={state.modalVisible}
@@ -88,7 +101,7 @@ const Afaq = () => {
                 <label>Title</label>
                 <TextArea
                   rows={4}
-                  value={state?.faqs?.map((element) => element?.title)}
+                  value={state?.regions?.map((element) => element?.title)}
                   name="title"
                 />
                 <label>Description</label>
@@ -97,9 +110,14 @@ const Afaq = () => {
                   // onChange={(e) =>
                   //   handleChange("description", e.target.value)
                   // }
-                  value={state?.faqs?.map((element) => element?.description)}
+                  value={state?.regions?.map((element) => element?.description)}
                   name="description"
                 />
+                <br />
+                <br />
+                <Upload>
+                  <Button icon={<AiOutlineUpload />}>Click to Upload</Button>
+                </Upload>
               </form>
             </Modal>
           </Space>
@@ -116,20 +134,14 @@ const Afaq = () => {
     },
   ];
 
-  const fetchFaqs = () => {
-    setState({ ...state, error: null });
-    getFaq()
-      .then(({ data }) => setState({ ...state, faqs: data, error: null }))
-      .catch({ ...state, error: null });
-  };
-
   useEffect(() => {
-    fetchFaqs();
+    fetchRegions();
   }, []);
 
-  const mappedData = state?.faqs?.map((item) => ({
+  const mappedData = state?.regions?.map((item) => ({
     title: item?.title,
     description: item?.description,
+    image: <ShowImage region={item?.image} url="uploads" />,
   }));
 
   return (
@@ -137,7 +149,7 @@ const Afaq = () => {
       <div className="mini-container">
         <div className="head-container">
           <div className="head-section">
-            <h1>FAQ</h1>
+            <h1>Region</h1>
           </div>
           <div className="profile-section">
             <h4>Bishow Raj Adhikari</h4>
@@ -151,12 +163,12 @@ const Afaq = () => {
           }}
           className="content-container"
         >
-          <h1>Action to your faq-section</h1>
+          <h1>Action to your region-section</h1>
           <Button type="primary" onClick={showModal}>
             Add
           </Button>
           <Modal
-            title="Add Faq"
+            title="Add Region"
             open={isModalOpen}
             onOk={handleOk}
             onCancel={handleCancel}
@@ -166,6 +178,14 @@ const Afaq = () => {
               <TextArea rows={4} name="title" />
               <label>Description</label>
               <TextArea rows={6} name="description" />
+              <br />
+              <br />
+              <label>Image</label>
+              <br />
+              <br />
+              <Upload>
+                <Button icon={<AiOutlineUpload />}>Click to Upload</Button>
+              </Upload>
             </form>
           </Modal>
         </div>
@@ -175,4 +195,4 @@ const Afaq = () => {
   );
 };
 
-export default Afaq;
+export default Aregion;

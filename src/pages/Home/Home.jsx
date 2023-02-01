@@ -64,10 +64,10 @@ const Home = () => {
               <h3>About 'Out of Town'</h3>
             </div>
             <div className="home-second-details">
-              {state.descs.map((p) => {
+              {state?.descs?.map((p) => {
                 return (
                   <div>
-                    <p className="home-paragraph">{p.description}</p>
+                    <p className="home-paragraph">{p?.description}</p>
                   </div>
                 );
               })}

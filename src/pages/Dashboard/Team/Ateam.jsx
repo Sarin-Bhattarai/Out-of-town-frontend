@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import "./afaq.css";
 import Admin from "../../../resources/images/admin.jpg";
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
-import { getFaq } from "../../../utils/api/faqApi";
-import { Row, Button, Modal, Table, message, Space, Input } from "antd";
+import { getTeams } from "../../../utils/api/teamApi";
+import TeamImage from "../../../utils/data/teamImage";
+import { Row, Button, Modal, Table, message, Space, Input, Upload } from "antd";
+import { AiFillEdit, AiFillDelete, AiOutlineUpload } from "react-icons/ai";
 const { TextArea } = Input;
 
-const Afaq = () => {
+const Ateam = () => {
   const [state, setState] = useState({
-    faqs: [],
+    teams: [],
     error: null,
     modalVisible: false,
   });
@@ -26,25 +26,23 @@ const Afaq = () => {
 
   const columns = [
     {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
       render: (text) => <p className="dashboard-paragraph">{text}</p>,
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-      render: (text) => (
-        <p
-          style={{
-            width: "90%",
-          }}
-          className="dashboard-paragraph"
-        >
-          {text}
-        </p>
-      ),
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
+      render: (text) => <p className="dashboard-paragraph">{text}</p>,
+    },
+
+    {
+      title: "Image",
+      dataIndex: "image",
+      key: "image",
+      render: (image) => <div>{image}</div>,
     },
 
     {
@@ -72,7 +70,7 @@ const Afaq = () => {
               />
             </Button>
             <Modal
-              title="Edit Faq"
+              title="Edit Team"
               okText="Edit"
               style={{ top: 20 }}
               visible={state.modalVisible}
@@ -85,21 +83,26 @@ const Afaq = () => {
               onCancel={() => setState({ ...state, modalVisible: false })}
             >
               <form>
-                <label>Title</label>
+                <label>Name</label>
                 <TextArea
-                  rows={4}
-                  value={state?.faqs?.map((element) => element?.title)}
-                  name="title"
+                  rows={2}
+                  value={state?.teams?.map((element) => element?.name)}
+                  name="name"
                 />
-                <label>Description</label>
+                <label>Role</label>
                 <TextArea
-                  rows={6}
+                  rows={2}
                   // onChange={(e) =>
                   //   handleChange("description", e.target.value)
                   // }
-                  value={state?.faqs?.map((element) => element?.description)}
-                  name="description"
+                  value={state?.teams?.map((element) => element?.role)}
+                  name="role"
                 />
+                <br />
+                <br />
+                <Upload>
+                  <Button icon={<AiOutlineUpload />}>Click to Upload</Button>
+                </Upload>
               </form>
             </Modal>
           </Space>
@@ -116,20 +119,21 @@ const Afaq = () => {
     },
   ];
 
-  const fetchFaqs = () => {
+  const fetchTeams = () => {
     setState({ ...state, error: null });
-    getFaq()
-      .then(({ data }) => setState({ ...state, faqs: data, error: null }))
+    getTeams()
+      .then(({ data }) => setState({ ...state, teams: data, error: null }))
       .catch({ ...state, error: null });
   };
 
   useEffect(() => {
-    fetchFaqs();
+    fetchTeams();
   }, []);
 
-  const mappedData = state?.faqs?.map((item) => ({
-    title: item?.title,
-    description: item?.description,
+  const mappedData = state?.teams?.map((item) => ({
+    name: item?.name,
+    role: item?.role,
+    image: <TeamImage region={item?.image} url="uploads" />,
   }));
 
   return (
@@ -137,7 +141,7 @@ const Afaq = () => {
       <div className="mini-container">
         <div className="head-container">
           <div className="head-section">
-            <h1>FAQ</h1>
+            <h1>Team</h1>
           </div>
           <div className="profile-section">
             <h4>Bishow Raj Adhikari</h4>
@@ -151,21 +155,29 @@ const Afaq = () => {
           }}
           className="content-container"
         >
-          <h1>Action to your faq-section</h1>
+          <h1>Action to your team-section</h1>
           <Button type="primary" onClick={showModal}>
             Add
           </Button>
           <Modal
-            title="Add Faq"
+            title="Add Team"
             open={isModalOpen}
             onOk={handleOk}
             onCancel={handleCancel}
           >
             <form>
-              <label>Title</label>
-              <TextArea rows={4} name="title" />
-              <label>Description</label>
-              <TextArea rows={6} name="description" />
+              <label>Name</label>
+              <TextArea rows={2} name="name" />
+              <label>Role</label>
+              <TextArea rows={2} name="role" />
+              <br />
+              <br />
+              <label>Image</label>
+              <br />
+              <br />
+              <Upload>
+                <Button icon={<AiOutlineUpload />}>Click to Upload</Button>
+              </Upload>
             </form>
           </Modal>
         </div>
@@ -175,4 +187,4 @@ const Afaq = () => {
   );
 };
 
-export default Afaq;
+export default Ateam;

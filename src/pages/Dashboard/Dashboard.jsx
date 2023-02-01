@@ -13,6 +13,9 @@ import {
 } from "react-icons/md";
 import HomeDesc from "./homeDesc/HomeDesc";
 import Afaq from "./Faq/Afaq";
+import Aregion from "./Region/Aregion";
+import Ateam from "./Team/Ateam";
+import Aservice from "./Service/Aservice";
 
 const { Sider, Content } = Layout;
 const Dashboard = () => {
@@ -35,17 +38,17 @@ const Dashboard = () => {
       label: "Faq",
     },
     {
-      key: "/dashboard/region",
+      key: "/api/dashboard/region",
       icon: <MdOutlineMyLocation />,
       label: "Region",
     },
     {
-      key: "/dashboard/team",
+      key: "/api/dashboard/team",
       icon: <MdSportsKabaddi />,
       label: "Team",
     },
     {
-      key: "/dashboard/services",
+      key: "/api/dashboard/services",
       icon: <MdConstruction />,
       label: "Services",
     },
@@ -99,6 +102,9 @@ const Dashboard = () => {
           <Route path="/api/dashboard" element={<HomeDesc />} />
           <Route path="/api/dashboard/homeDesc" element={<HomeDesc />} />
           <Route path="/api/dashboard/faq" element={<Afaq />} />
+          <Route path="/api/dashboard/region" element={<Aregion />} />
+          <Route path="/api/dashboard/team" element={<Ateam />} />
+          <Route path="/api/dashboard/services" element={<Aservice />} />
         </Routes>
       </Content>
     </Layout>
