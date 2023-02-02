@@ -16,6 +16,7 @@ import Afaq from "./Faq/Afaq";
 import Aregion from "./Region/Aregion";
 import Ateam from "./Team/Ateam";
 import Aservice from "./Service/Aservice";
+import Asubregion from "./subRegion/Asubregion";
 
 const { Sider, Content } = Layout;
 const Dashboard = () => {
@@ -53,7 +54,7 @@ const Dashboard = () => {
       label: "Services",
     },
     {
-      key: "/dashboard/subRegion",
+      key: "/api/dashboard/subRegion",
       icon: <MdNature />,
       label: "SubRegion",
     },
@@ -105,6 +106,7 @@ const Dashboard = () => {
           <Route path="/api/dashboard/region" element={<Aregion />} />
           <Route path="/api/dashboard/team" element={<Ateam />} />
           <Route path="/api/dashboard/services" element={<Aservice />} />
+          <Route path="/api/dashboard/subRegion" element={<Asubregion />} />
         </Routes>
       </Content>
     </Layout>

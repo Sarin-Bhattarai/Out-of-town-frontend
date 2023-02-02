@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Admin from "../../../resources/images/admin.jpg";
 import { AiFillEdit, AiFillDelete, AiOutlineUpload } from "react-icons/ai";
-import { getServices } from "../../../utils/api/serviceApi";
 import { Row, Button, Modal, Table, message, Space, Input, Upload } from "antd";
-import ServiceImage from "../../../utils/data/serviceImage";
+import ShowImage from "../../../utils/data/showImage";
+import { getSubRegion } from "../../../utils/api/subregionApi";
 const { TextArea } = Input;
 
-const Aservice = () => {
+const Asubregion = () => {
   const [state, setState] = useState({
-    services: [],
+    subRegions: [],
     error: null,
     modalVisible: false,
   });
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
@@ -23,17 +22,6 @@ const Aservice = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
-  const fetchServices = () => {
-    setState({ ...state, error: null });
-    getServices()
-      .then(({ data }) => setState({ ...state, services: data, error: null }))
-      .catch({ ...state, error: null });
-  };
-
-  useEffect(() => {
-    fetchServices();
-  }, []);
 
   const columns = [
     {
@@ -46,6 +34,37 @@ const Aservice = () => {
       title: "Description",
       dataIndex: "description",
       key: "description",
+      render: (text) => (
+        <p
+          style={{
+            width: "90%",
+          }}
+          className="dashboard-paragraph"
+        >
+          {text}
+        </p>
+      ),
+    },
+    {
+      title: "Includedetails",
+      dataIndex: "includedetails",
+      key: "includedetails",
+      render: (text) => (
+        <p
+          style={{
+            width: "90%",
+          }}
+          className="dashboard-paragraph"
+        >
+          {text}
+        </p>
+      ),
+    },
+
+    {
+      title: "Excludedetails",
+      dataIndex: "excludedetails",
+      key: "excludedetails",
       render: (text) => (
         <p
           style={{
@@ -90,7 +109,7 @@ const Aservice = () => {
               />
             </Button>
             <Modal
-              title="Edit Region"
+              title="Edit Sub-Region"
               okText="Edit"
               style={{ top: 20 }}
               visible={state.modalVisible}
@@ -106,7 +125,7 @@ const Aservice = () => {
                 <label>Title</label>
                 <TextArea
                   rows={4}
-                  value={state?.services?.map((element) => element?.title)}
+                  value={state?.subRegions?.map((element) => element?.title)}
                   name="title"
                 />
                 <label>Description</label>
@@ -115,10 +134,32 @@ const Aservice = () => {
                   // onChange={(e) =>
                   //   handleChange("description", e.target.value)
                   // }
-                  value={state?.services?.map(
+                  value={state?.subRegions?.map(
                     (element) => element?.description
                   )}
                   name="description"
+                />
+                <label>Includedetails</label>
+                <TextArea
+                  rows={6}
+                  // onChange={(e) =>
+                  //   handleChange("description", e.target.value)
+                  // }
+                  value={state?.subRegions?.map(
+                    (element) => element?.includedetails
+                  )}
+                  name="includedetails"
+                />
+                <label>Excludedetails</label>
+                <TextArea
+                  rows={6}
+                  // onChange={(e) =>
+                  //   handleChange("description", e.target.value)
+                  // }
+                  value={state?.subRegions?.map(
+                    (element) => element?.excludedetails
+                  )}
+                  name="excludedetails"
                 />
                 <br />
                 <br />
@@ -141,16 +182,28 @@ const Aservice = () => {
     },
   ];
 
-  const mappedData = state?.services?.map((item) => ({
+  const fetchSubRegions = () => {
+    setState({ ...state, error: null });
+    getSubRegion()
+      .then(({ data }) => setState({ ...state, subRegions: data, error: null }))
+      .catch({ ...state, error: null });
+  };
+
+  useEffect(() => {
+    fetchSubRegions();
+  }, []);
+
+  const mappedData = state?.subRegions?.map((item) => ({
     title: item?.title,
     description: item?.description,
+    includedetails: item?.includedetails,
+    excludedetails: item?.excludedetails,
     image: [
-      <ServiceImage region={item?.image?.[0]} url="uploads" />,
-      <ServiceImage region={item?.image?.[1]} url="uploads" />,
-      <ServiceImage region={item?.image?.[2]} url="uploads" />,
+      <ShowImage region={item?.image?.[0]} url="uploads" />,
+      <ShowImage region={item?.image?.[1]} url="uploads" />,
+      <ShowImage region={item?.image?.[2]} url="uploads" />,
     ],
   }));
-
   return (
     <section className="dashboard-container">
       <div className="mini-container">
@@ -170,12 +223,12 @@ const Aservice = () => {
           }}
           className="content-container"
         >
-          <h1>Action to your service-section</h1>
+          <h1>Action to your sub-region-section</h1>
           <Button type="primary" onClick={showModal}>
             Add
           </Button>
           <Modal
-            title="Add Service"
+            title="Add Sub-region"
             open={isModalOpen}
             onOk={handleOk}
             onCancel={handleCancel}
@@ -185,6 +238,10 @@ const Aservice = () => {
               <TextArea rows={4} name="title" />
               <label>Description</label>
               <TextArea rows={6} name="description" />
+              <label>Includedetails</label>
+              <TextArea rows={6} name="includedetails" />
+              <label>Excludedetails</label>
+              <TextArea rows={6} name="excludedetails" />
               <br />
               <br />
               <label>Image</label>
@@ -202,4 +259,4 @@ const Aservice = () => {
   );
 };
 
-export default Aservice;
+export default Asubregion;
