@@ -1,15 +1,10 @@
 import "./homeDesc.css";
 import React, { useState, useEffect } from "react";
-import {
-  getHomeDesc,
-  editHomeDesc,
-  deleteHomeDesc,
-} from "../../../utils/api/homeApi";
+import { getHomeDesc, editHomeDesc } from "../../../utils/api/homeApi";
 import Admin from "../../../resources/images/admin.jpg";
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import { AiFillEdit } from "react-icons/ai";
 import { Row, Button, Modal, Table, message, Space, Input } from "antd";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 const { TextArea } = Input;
 
 const HomeDesc = () => {
@@ -21,19 +16,13 @@ const HomeDesc = () => {
     updateLoading: false,
   });
 
-  // const handleChange = (name, value) => {
-  //   setState({
-  //     ...state,
-  //     error: null,
-  //     descs: { ...state.descs, [name]: value },
-  //   });
-  // };
-
-  const handleChange = (event, id) => {
+  const handleChange = (name, id, value) => {
     const newDescs = [...state.descs];
-    const index = newDescs.findIndex((element) => element.id === id);
-    newDescs[index] = { ...newDescs[index], value: event.target.value }; //updating the value of element
-    setState(newDescs);
+    const index = newDescs.findIndex((element) => element._id === id);
+    newDescs[index] = { ...newDescs[index], [name]: value }; //updating the value of element
+    setState((prev) => {
+      return { ...prev, descs: newDescs };
+    });
   };
 
   const columns = [
@@ -54,7 +43,7 @@ const HomeDesc = () => {
       title: "Actions",
       dataIndex: "action",
       key: "action",
-      render: (_) => (
+      render: (_, _id) => (
         <Row
           style={{
             gap: "1rem",
@@ -82,7 +71,10 @@ const HomeDesc = () => {
               okButtonProps={{ loading: state.updateLoading }}
               onOk={(e) => {
                 e.preventDefault();
-                submitDesc();
+                handleUpdate(
+                  _id?._id,
+                  state.descs.find((e) => e._id === _id?._id)
+                );
                 setState({ ...state, modalVisible: false });
               }}
               onCancel={() => setState({ ...state, modalVisible: false })}
@@ -91,20 +83,15 @@ const HomeDesc = () => {
                 <label>Description</label>
                 <TextArea
                   rows={6}
-                  onChange={(e) => handleChange("description", e.target.value)}
+                  onChange={(e) =>
+                    handleChange("description", _id?._id, e.target.value)
+                  }
                   value={state?.descs?.map((element) => element?.description)}
                   name="description"
                 />
               </form>
             </Modal>
           </Space>
-
-          {/* <AiFillDelete
-            style={{
-              color: "#eb1d0f",
-            }}
-            size={18}
-          /> */}
         </Row>
       ),
     },
@@ -121,39 +108,32 @@ const HomeDesc = () => {
     fetchDescs();
   }, []);
 
-  const submitDesc = (id) => {
-    editHomeDesc(id)
-      .then(({ data }) => {
-        setState({ ...state, descs: data, updateLoading: false, error: null });
+  const handleUpdate = (id, data) => {
+    setState({ ...state, updateLoading: true });
+    editHomeDesc(id, data)
+      .then((response) => {
+        // Update the state with the response data
+        setState({
+          ...state,
+          descs: response?.data,
+          updateLoading: false,
+          modalVisible: false,
+        });
         message.success("Successfully updated description");
         setTimeout(() => {
           navigate("/");
+          window.location.reload();
         }, 1000);
       })
       .catch((error) => {
+        // Update the state with the error
         setState({ ...state, updateLoading: false });
         message.error("Error updating description");
         setTimeout(() => {
-          navigate("/api/dashboard/homeDesc");
-        }, 2000);
+          navigate("/");
+        }, 1000);
       });
   };
-
-  //alternative api
-  // const handleEdit = async (id) => {
-  //   try {
-  //     const index = state.descs.findIndex((element) => element.id === id);
-  //     const response = await axios.patch(
-  //       `http://localhost:4000/api/descs/${id}`,
-  //       state.descs[index]
-  //     );
-  //     setState((prevArray) =>
-  //       prevArray?.map((e) => (e.id === id ? response.data : e))
-  //     );
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const mappedData = state?.descs?.map((item) => ({
     _id: item?._id,

@@ -15,10 +15,3 @@ export const editHomeDesc = (id, data) => {
     data: data,
   });
 };
-
-export const deleteHomeDesc = (id) => {
-  return axios({
-    url: `${BaseUrl}/descs/${id}`,
-    method: "DELETE",
-  });
-};
