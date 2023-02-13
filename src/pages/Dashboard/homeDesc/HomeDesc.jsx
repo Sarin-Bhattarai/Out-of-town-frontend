@@ -131,6 +131,7 @@ const HomeDesc = () => {
         message.error("Error updating description");
         setTimeout(() => {
           navigate("/");
+          window.location.reload();
         }, 1000);
       });
   };
