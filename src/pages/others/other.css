@@ -1,0 +1,17 @@
+.other {
+  min-height: 90vh;
+  margin-top: 20px;
+}
+
+.query-section {
+  margin-top: 6%;
+}
+
+.query {
+  padding: 22px;
+  border-radius: 10px;
+  background-color: #fb8a57;
+  box-shadow: 2px 7px 25px 15px rgb(0 0 0 / 5%);
+  -webkit-box-shadow: 2px 7px 25px 15px rgb(0 0 0 / 5%);
+  -moz-box-shadow: 2px 7px 25px 15px rgba(0, 0, 0, 0.05);
+}
