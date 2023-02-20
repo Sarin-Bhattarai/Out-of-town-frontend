@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from "react";
 import "./afaq.css";
+import React, { useState, useEffect } from "react";
 import Admin from "../../../resources/images/admin.jpg";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
-import { getFaq } from "../../../utils/api/faqApi";
+import { getFaq, createFaq } from "../../../utils/api/faqApi";
 import { Row, Button, Modal, Table, message, Space, Input } from "antd";
+import { useNavigate } from "react-router-dom";
 const { TextArea } = Input;
 
 const Afaq = () => {
   const [state, setState] = useState({
     faqs: [],
+    newFaq: "",
     error: null,
     modalVisible: false,
   });
+  const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -22,6 +25,45 @@ const Afaq = () => {
   };
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+
+  //create faq process
+  const handleChange = (name, value) => {
+    setState({
+      ...state,
+      error: null,
+      newFaq: { ...state.newFaq, [name]: value },
+    });
+  };
+
+  const clickSubmit = () => {
+    setState({ ...state, error: null });
+    const addFaq = {
+      title: state.newFaq.title,
+      description: state.newFaq.description,
+    };
+    createFaq(addFaq)
+      .then(({ data }) => {
+        setState({
+          ...state,
+          newFaq: data,
+          error: null,
+          faqs: [...state.faqs, data],
+          modalVisible: false,
+        });
+        message.success("Faq added");
+      })
+      .catch((error) => {
+        setState({
+          ...state,
+          error: error,
+          modalVisible: false,
+        });
+        message.error("Error adding faq");
+        // setTimeout(() => {
+        //   navigate("/");
+        // }, 1000);
+      });
   };
 
   const columns = [
