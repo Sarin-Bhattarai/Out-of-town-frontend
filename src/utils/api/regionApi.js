@@ -8,11 +8,11 @@ export const getRegion = () => {
   });
 };
 
-export const postRegion = (title, description, image) => {
+export const postRegion = (title, description, file) => {
   const formData = new FormData();
   formData.append("title", title);
   formData.append("description", description);
-  formData.append("image", image);
+  formData.append("image", file);
   return axios.post(`${BaseUrl}/regions`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",

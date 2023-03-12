@@ -10,7 +10,7 @@ const Aregion = () => {
   const [state, setState] = useState({
     regions: [],
     error: null,
-    newRegion: "",
+    newRegion: { title: "", description: "", image: null },
     modalVisible: false,
     updateLoading: false,
   });
@@ -37,32 +37,26 @@ const Aregion = () => {
     });
   };
 
-  const clickSubmit = () => {
-    setState({ ...state, error: null });
-    const addRegion = {
-      title: state.newRegion.title,
-      description: state.newRegion.description,
-      image: state.newRegion.image,
-    };
-    postRegion(addRegion)
-      .then(({ data }) => {
-        setState({
-          ...state,
-          newRegion: data,
-          error: null,
-          regions: [...state.regions, data],
-          modalVisible: false,
-        });
-        message.success("Region added");
-      })
-      .catch((error) => {
-        setState({
-          ...state,
-          error: error,
-          modalVisible: false,
-        });
-        message.error("Error adding region");
+  const clickSubmit = async () => {
+    const { title, description, image } = state.newRegion;
+    try {
+      const response = await postRegion(title, description, image);
+      setState({
+        ...state,
+        newRegion: response?.data,
+        error: null,
+        modalVisible: false,
+        regions: [...state.regions, response?.data],
       });
+      message.success("Region added");
+    } catch (error) {
+      setState({
+        ...state,
+        error: error,
+        modalVisible: false,
+      });
+      message.error("Error adding region");
+    }
   };
 
   const fetchRegions = () => {
@@ -73,6 +67,12 @@ const Aregion = () => {
   };
 
   const columns = [
+    {
+      title: "Id",
+      dataIndex: "_id",
+      key: "_id",
+      render: (text) => <h4>{text}</h4>,
+    },
     {
       title: "Title",
       dataIndex: "title",
@@ -181,6 +181,7 @@ const Aregion = () => {
   }, []);
 
   const mappedData = state?.regions?.map((item) => ({
+    _id: item?._id,
     title: item?.title,
     description: item?.description,
     image: <ShowImage region={item?.image} url="uploads" />,
@@ -242,19 +243,14 @@ const Aregion = () => {
               <br />
               <br />
               <Upload
+                accept="image/*"
                 listType="picture"
                 beforeUpload={(file) => {
-                  const isJpgOrPng =
-                    file.type === "image/jpeg" ||
-                    file.type === "image/png" ||
-                    file.type === "image/jpg";
-                  if (!isJpgOrPng) {
-                    message.error("You can only upload JPG/PNG/JPEG file!");
-                    return false;
-                  }
-                  return true;
+                  handleChange("image", file);
+                  return false; // prevent Ant Design from automatically uploading the file
                 }}
-                onChange={(e) => handleChange("image", e.file)}
+                fileList={state.newRegion.image ? [state.newRegion.image] : []}
+                name="image"
               >
                 <Button icon={<AiOutlineUpload />}>Click to Upload</Button>
               </Upload>
