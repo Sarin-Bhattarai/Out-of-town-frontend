@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Admin from "../../../resources/images/admin.jpg";
 import { Row, Button, Modal, Table, message, Space, Input, Upload } from "antd";
 import { AiFillEdit, AiFillDelete, AiOutlineUpload } from "react-icons/ai";
-import { getRegion } from "../../../utils/api/regionApi";
+import { getRegion, postRegion } from "../../../utils/api/regionApi";
 import ShowImage from "../../../utils/data/showImage";
 const { TextArea } = Input;
 
@@ -10,17 +10,59 @@ const Aregion = () => {
   const [state, setState] = useState({
     regions: [],
     error: null,
+    newRegion: "",
     modalVisible: false,
+    updateLoading: false,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const handleOk = () => {
+  const handleOk = (e) => {
+    e.preventDefault();
+    setState({ ...state }, clickSubmit());
     setIsModalOpen(false);
   };
   const handleCancel = () => {
+    setState({ ...state, newRegion: "" });
     setIsModalOpen(false);
+  };
+
+  //create region process
+  const handleChange = (name, value) => {
+    setState({
+      ...state,
+      error: null,
+      newRegion: { ...state.newRegion, [name]: value },
+    });
+  };
+
+  const clickSubmit = () => {
+    setState({ ...state, error: null });
+    const addRegion = {
+      title: state.newRegion.title,
+      description: state.newRegion.description,
+      image: state.newRegion.image,
+    };
+    postRegion(addRegion)
+      .then(({ data }) => {
+        setState({
+          ...state,
+          newRegion: data,
+          error: null,
+          regions: [...state.regions, data],
+          modalVisible: false,
+        });
+        message.success("Region added");
+      })
+      .catch((error) => {
+        setState({
+          ...state,
+          error: error,
+          modalVisible: false,
+        });
+        message.error("Error adding region");
+      });
   };
 
   const fetchRegions = () => {
@@ -175,15 +217,45 @@ const Aregion = () => {
           >
             <form>
               <label>Title</label>
-              <TextArea rows={4} name="title" />
+              <TextArea
+                type="text"
+                placeholder="Region title"
+                onChange={(e) => handleChange("title", e.target.value)}
+                value={state.newRegion.title}
+                required
+                rows={4}
+                name="title"
+              />
               <label>Description</label>
-              <TextArea rows={6} name="description" />
+              <TextArea
+                type="text"
+                placeholder="Region description"
+                onChange={(e) => handleChange("description", e.target.value)}
+                value={state.newRegion.description}
+                required
+                rows={6}
+                name="description"
+              />
               <br />
               <br />
               <label>Image</label>
               <br />
               <br />
-              <Upload>
+              <Upload
+                listType="picture"
+                beforeUpload={(file) => {
+                  const isJpgOrPng =
+                    file.type === "image/jpeg" ||
+                    file.type === "image/png" ||
+                    file.type === "image/jpg";
+                  if (!isJpgOrPng) {
+                    message.error("You can only upload JPG/PNG/JPEG file!");
+                    return false;
+                  }
+                  return true;
+                }}
+                onChange={(e) => handleChange("image", e.file)}
+              >
                 <Button icon={<AiOutlineUpload />}>Click to Upload</Button>
               </Upload>
             </form>

@@ -17,3 +17,20 @@ export const createFaq = (payload) => {
     data: payload,
   });
 };
+
+//for editing faq
+export const editFaq = (id, data) => {
+  return axios({
+    url: `${BaseUrl}/faqs/${id}`,
+    method: "PATCH",
+    data: data,
+  });
+};
+
+//for deleting faq
+export const deleteFaq = (id) => {
+  return axios({
+    url: `${BaseUrl}/faqs/${id}`,
+    method: "DELETE",
+  });
+};
