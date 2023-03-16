@@ -4,13 +4,17 @@ import { getTeams } from "../../../utils/api/teamApi";
 import TeamImage from "../../../utils/data/teamImage";
 import { Row, Button, Modal, Table, message, Space, Input, Upload } from "antd";
 import { AiFillEdit, AiFillDelete, AiOutlineUpload } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 const { TextArea } = Input;
 
 const Ateam = () => {
+  const navigate = useNavigate();
   const [state, setState] = useState({
     teams: [],
     error: null,
+    newTeam: { name: "", role: "", image: null },
     modalVisible: false,
+    updateLoading: false,
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);

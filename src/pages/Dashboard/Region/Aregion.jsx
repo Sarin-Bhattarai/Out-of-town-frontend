@@ -27,10 +27,12 @@ const Aregion = () => {
   const [state, setState] = useState({
     regions: [],
     error: null,
-    newRegion: { title: "", description: "", image: null },
+    newRegion: { id: "", title: "", description: "", image: null },
     modalVisible: false,
     updateLoading: false,
   });
+
+  const [newImage, setNewImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
@@ -45,13 +47,33 @@ const Aregion = () => {
     setIsModalOpen(false);
   };
 
-  //create region process
-  const handleChange = (name, value) => {
-    setState({
-      ...state,
-      error: null,
-      newRegion: { ...state.newRegion, [name]: value },
-    });
+  // create region process
+  const handleChange = (name, value, isEdit) => {
+    if (isEdit) {
+      setNewImage(value);
+      setState({
+        ...state,
+        error: null,
+        regions: state?.regions?.map((region) => {
+          if (region._id === state.newRegion.id) {
+            setState({
+              ...state,
+              error: null,
+              newRegion: { ...state.newRegion, [name]: value },
+            });
+            return region;
+          } else {
+            return region;
+          }
+        }),
+      });
+    } else {
+      setState({
+        ...state,
+        error: null,
+        newRegion: { ...state.newRegion, [name]: value },
+      });
+    }
   };
 
   const clickSubmit = async () => {
@@ -88,14 +110,12 @@ const Aregion = () => {
   };
 
   const handleEditImageUpload = (id, title, description, image) => {
-    console.log(image);
     setState({ ...state, updateLoading: true });
     editRegion(id, title, description, image)
       .then((response) => {
         const updatedRegions = state?.regions?.map((region) => {
           if (region._id === id) {
             return response?.data;
-            // return { ...response?.data, image: state?.newRegion?.image };
           } else {
             return region;
           }
@@ -193,15 +213,19 @@ const Aregion = () => {
                 style={{
                   border: "none",
                 }}
-                onClick={() =>
+                onClick={() => {
                   setState({
                     ...state,
+                    newRegion: {
+                      ...state.newRegion,
+                      id: _id._id,
+                    },
                     modalVisible: {
                       ...state.modalVisible,
                       [_id._id]: true,
                     },
-                  })
-                }
+                  });
+                }}
               >
                 <AiFillEdit
                   style={{
@@ -222,7 +246,13 @@ const Aregion = () => {
                     (el) => el._id === _id._id
                   );
                   const { title, description, image } = region;
-                  handleEditImageUpload(_id._id, title, description, image);
+                  console.log(state);
+                  handleEditImageUpload(
+                    _id._id,
+                    title,
+                    description,
+                    newImage || image
+                  );
                   setState({ ...state, modalVisible: false });
                 }}
                 onCancel={() => setState({ ...state, modalVisible: false })}
@@ -257,12 +287,22 @@ const Aregion = () => {
                   <Upload
                     accept="image/*"
                     beforeUpload={(file) => {
-                      handleChange("image", file);
+                      handleChange("image", file, true);
                       return false; // prevent Ant Design from automatically uploading the file
                     }}
-                    fileList={
-                      state.newRegion.image ? [state.newRegion.image] : []
-                    }
+                    fileList={state?.regions
+                      ?.filter((region) => region._id === _id._id)
+                      ?.map((region) =>
+                        region?.image
+                          ? {
+                              uid: region._id,
+                              name: region?.title,
+                              status: "done",
+                              url: region?.image,
+                            }
+                          : null
+                      )
+                      .filter((region) => region !== null)}
                     name="image"
                   >
                     <Button icon={<AiOutlineUpload />}>Upload Image</Button>
