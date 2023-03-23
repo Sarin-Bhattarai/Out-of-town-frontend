@@ -128,6 +128,9 @@ const Aregion = () => {
           newRegion: {}, // reset the newRegion object in state
         });
         message.success("Successfully updated region");
+        setTimeout(() => {
+          navigate("/api/dashboard");
+        }, 1000);
       })
       .catch((error) => {
         setState({ ...state, updateLoading: false });
@@ -141,7 +144,7 @@ const Aregion = () => {
       .then((region) => {
         message.success("Region deleted");
         setTimeout(() => {
-          navigate("/trekking");
+          navigate("/api/dashboard");
         }, 1000);
       })
       .catch((error) => {
@@ -246,7 +249,6 @@ const Aregion = () => {
                     (el) => el._id === _id._id
                   );
                   const { title, description, image } = region;
-                  console.log(state);
                   handleEditImageUpload(
                     _id._id,
                     title,
