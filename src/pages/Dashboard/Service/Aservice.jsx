@@ -258,7 +258,7 @@ const Aservice = () => {
               okButtonProps={{ loading: state.updateLoading }}
               onOk={(e) => {
                 e.preventDefault();
-                const service = state?.services.find(
+                const service = state?.services?.find(
                   (el) => el._id === _id._id
                 );
                 const { title, description, image } = service;
@@ -276,23 +276,54 @@ const Aservice = () => {
                 <label>Title</label>
                 <TextArea
                   rows={4}
-                  value={state?.services?.map((element) => element?.title)}
+                  onChange={(e) =>
+                    handleSubmit("title", _id._id, e.target.value)
+                  }
+                  value={
+                    state?.services?.find((el) => el._id === _id._id)?.title ||
+                    ""
+                  }
                   name="title"
                 />
                 <label>Description</label>
                 <TextArea
                   rows={6}
-                  // onChange={(e) =>
-                  //   handleChange("description", e.target.value)
-                  // }
-                  value={state?.services?.map(
-                    (element) => element?.description
-                  )}
+                  onChange={(e) =>
+                    handleSubmit("description", _id._id, e.target.value)
+                  }
+                  value={
+                    state?.services?.find((el) => el._id === _id._id)
+                      ?.description || ""
+                  }
                   name="description"
                 />
                 <br />
                 <br />
-                <Upload>
+                <Upload
+                  accept="image/*"
+                  beforeUpload={(file) => {
+                    handleChange("image", file, true);
+                    return false;
+                  }}
+                  fileList={state?.services
+                    ?.filter((service) => service._id === _id._id)
+                    ?.map((service) =>
+                      service?.image
+                        ? {
+                            name: service?.title,
+                            status: "done",
+                            url: [
+                              service?.image[0],
+                              service?.image[1],
+                              service?.image[2],
+                            ],
+                          }
+                        : null
+                    )
+                    .filter((service) => service !== null)}
+                  name="image"
+                  multiple={true}
+                >
                   <Button icon={<AiOutlineUpload />}>Click to Upload</Button>
                 </Upload>
               </form>
