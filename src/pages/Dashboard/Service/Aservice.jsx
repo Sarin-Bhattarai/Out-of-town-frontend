@@ -55,7 +55,7 @@ const Aservice = () => {
       setState({
         ...state,
         error: null,
-        regions: state?.services?.map((service) => {
+        services: state?.services?.map((service) => {
           if (service._id === state.newService.id) {
             setState({
               ...state,

@@ -1,8 +1,23 @@
 import React, { useState, useEffect } from "react";
 import Admin from "../../../resources/images/admin.jpg";
-import { getTeams } from "../../../utils/api/teamApi";
+import {
+  getTeams,
+  postTeam,
+  editTeam,
+  deleteTeam,
+} from "../../../utils/api/teamApi";
 import TeamImage from "../../../utils/data/teamImage";
-import { Row, Button, Modal, Table, message, Space, Input, Upload } from "antd";
+import {
+  Row,
+  Button,
+  Modal,
+  Table,
+  message,
+  Space,
+  Input,
+  Upload,
+  Popconfirm,
+} from "antd";
 import { AiFillEdit, AiFillDelete, AiOutlineUpload } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 const { TextArea } = Input;
@@ -12,11 +27,12 @@ const Ateam = () => {
   const [state, setState] = useState({
     teams: [],
     error: null,
-    newTeam: { name: "", role: "", image: null },
+    newTeam: { id: "", name: "", role: "", image: null },
     modalVisible: false,
     updateLoading: false,
   });
 
+  const [newImage, setNewImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
@@ -28,7 +44,76 @@ const Ateam = () => {
     setIsModalOpen(false);
   };
 
+  //create team process
+
+  const handleChange = (name, value, isEdit) => {
+    if (isEdit) {
+      setNewImage(value);
+      setState({
+        ...state,
+        error: null,
+        teams: state?.teams?.map((team) => {
+          if (team._id === state.newTeam.id) {
+            setState({
+              ...state,
+              error: null,
+              newTeam: { ...state.newTeam, [name]: value },
+            });
+            return team;
+          } else {
+            return team;
+          }
+        }),
+      });
+    } else {
+      setState({
+        ...state,
+        error: null,
+        newTeam: { ...state.newTeam, [name]: value },
+      });
+    }
+  };
+
+  const clickSubmit = async () => {
+    const { name, role, image } = state.newTeam;
+    try {
+      const response = await postTeam(name, role, image);
+      setState({
+        ...state,
+        newTeam: response?.data,
+        error: null,
+        modalVisible: false,
+        teams: [...state.teams, response?.data],
+      });
+      message.success("Team member added");
+    } catch (error) {
+      setState({
+        ...state,
+        error: error,
+        modalVisible: false,
+      });
+      message.error("Error adding member");
+    }
+  };
+
+  //for edit team process
+
+  const handleSubmit = (name, id, value) => {
+    const newTeams = [...state.teams];
+    const index = newTeams.findIndex((element) => element?._id === id);
+    newTeams[index] = { ...newTeams[index], [name]: value }; //update the new value of element
+    setState((prev) => {
+      return { ...prev, teams: newTeams };
+    });
+  };
+
   const columns = [
+    {
+      title: "Id",
+      dataIndex: "_id",
+      key: "_id",
+      render: (text) => <h4>{text}</h4>,
+    },
     {
       title: "Name",
       dataIndex: "name",
@@ -135,6 +220,7 @@ const Ateam = () => {
   }, []);
 
   const mappedData = state?.teams?.map((item) => ({
+    _id: item?._id,
     name: item?.name,
     role: item?.role,
     image: <TeamImage region={item?.image} url="uploads" />,
