@@ -87,26 +87,25 @@ const Aservice = () => {
   };
 
   const clickSubmit = async () => {
-    console.log(state.newService.image);
-    // const { title, description, image } = state.newService;
-    // try {
-    //   const response = await postService(title, description, image);
-    //   setState({
-    //     ...state,
-    //     newService: response?.data,
-    //     error: null,
-    //     modalVisible: false,
-    //     services: [...state.services, response?.data],
-    //   });
-    //   message.success("Service added");
-    // } catch (error) {
-    //   setState({
-    //     ...state,
-    //     error: error,
-    //     modalVisible: false,
-    //   });
-    //   message.error("Error adding service");
-    // }
+    const { title, description, image } = state.newService;
+    try {
+      const response = await postService(title, description, image);
+      setState({
+        ...state,
+        newService: response?.data,
+        error: null,
+        modalVisible: false,
+        services: [...state.services, response?.data],
+      });
+      message.success("Service added");
+    } catch (error) {
+      setState({
+        ...state,
+        error: error,
+        modalVisible: false,
+      });
+      message.error("Error adding service");
+    }
   };
 
   //for edit process
@@ -301,25 +300,12 @@ const Aservice = () => {
                 <br />
                 <Upload
                   accept="image/*"
-                  beforeUpload={(file) => {
-                    handleChange("image", file, true);
+                  beforeUpload={(_, fileList) => {
+                    handleChange("image", fileList, true);
                     return false;
                   }}
                   fileList={state?.services
                     ?.filter((service) => service._id === _id._id)
-                    ?.map((service) =>
-                      service?.image
-                        ? {
-                            name: service?.title,
-                            status: "done",
-                            url: [
-                              service?.image[0],
-                              service?.image[1],
-                              service?.image[2],
-                            ],
-                          }
-                        : null
-                    )
                     .filter((service) => service !== null)}
                   name="image"
                   multiple={true}
