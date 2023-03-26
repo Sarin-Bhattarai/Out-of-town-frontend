@@ -420,8 +420,8 @@ const Aservice = () => {
               <Upload
                 accept="image/*"
                 listType="picture"
-                beforeUpload={(file) => {
-                  handleChange("image", [file]);
+                beforeUpload={(_, fileList) => {
+                  handleChange("image", fileList);
                   return false; // prevent Ant Design from automatically uploading the file
                 }}
                 fileList={state.newService.image}
