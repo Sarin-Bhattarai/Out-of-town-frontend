@@ -19,6 +19,8 @@ import Aregion from "./Region/Aregion";
 import Ateam from "./Team/Ateam";
 import Aservice from "./Service/Aservice";
 import Asubregion from "./subRegion/Asubregion";
+import Aother from "./Other/Aother";
+import Afurther from "./FurtherDetails/Afurther";
 
 const { Sider, Content } = Layout;
 const Dashboard = () => {
@@ -119,6 +121,8 @@ const Dashboard = () => {
           <Route path="/api/dashboard/team" element={<Ateam />} />
           <Route path="/api/dashboard/services" element={<Aservice />} />
           <Route path="/api/dashboard/subRegion" element={<Asubregion />} />
+          <Route path="/api/dashboard/furtherDetails" element={<Afurther />} />
+          <Route path="/api/dashboard/others" element={<Aother />} />
         </Routes>
       </Content>
     </Layout>
