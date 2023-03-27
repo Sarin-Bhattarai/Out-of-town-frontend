@@ -143,7 +143,7 @@ const Aservice = () => {
       })
       .catch((error) => {
         setState({ ...state, updateLoading: false });
-        message.error("Error updating service");
+        message.error(error?.message || "Error updating service");
       });
   };
 

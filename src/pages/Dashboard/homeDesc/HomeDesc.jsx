@@ -1,9 +1,23 @@
 import "./homeDesc.css";
 import React, { useState, useEffect } from "react";
-import { getHomeDesc, editHomeDesc } from "../../../utils/api/homeApi";
+import {
+  getHomeDesc,
+  editHomeDesc,
+  createDesc,
+  deleteDesc,
+} from "../../../utils/api/homeApi";
 import Admin from "../../../resources/images/admin.jpg";
-import { AiFillEdit } from "react-icons/ai";
-import { Row, Button, Modal, Table, message, Space, Input } from "antd";
+import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import {
+  Row,
+  Button,
+  Modal,
+  Table,
+  message,
+  Space,
+  Input,
+  Popconfirm,
+} from "antd";
 import { useNavigate } from "react-router-dom";
 const { TextArea } = Input;
 
@@ -11,10 +25,33 @@ const HomeDesc = () => {
   const navigate = useNavigate();
   const [state, setState] = useState({
     descs: [],
+    newDesc: "",
     error: null,
     modalVisible: false,
     updateLoading: false,
   });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = (e) => {
+    e.preventDefault();
+    setState({ ...state }, clickSubmit());
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setState({ ...state, newDesc: "" });
+    setIsModalOpen(false);
+  };
+
+  const handleAdd = (name, value) => {
+    setState({
+      ...state,
+      error: null,
+      newDesc: { ...state.newDesc, [name]: value },
+    });
+  };
 
   const handleChange = (name, id, value) => {
     const newDescs = [...state.descs];
@@ -23,6 +60,50 @@ const HomeDesc = () => {
     setState((prev) => {
       return { ...prev, descs: newDescs };
     });
+  };
+
+  const clickSubmit = () => {
+    setState({ ...state, error: null });
+    const addDesc = {
+      description: state.newDesc.description,
+    };
+    createDesc(addDesc)
+      .then(({ data }) => {
+        setState({
+          ...state,
+          newDesc: data,
+          error: null,
+          descs: [...state.descs, data],
+          modalVisible: false,
+        });
+        message.success("Description added");
+      })
+      .catch((error) => {
+        setState({
+          ...state,
+          error: error,
+          modalVisible: false,
+        });
+        message.error("Error adding description");
+      });
+  };
+
+  const confirm = (id) => {
+    deleteDesc(id)
+      .then((desc) => {
+        message.success("Description deleted");
+        setTimeout(() => {
+          navigate("/api/dashboard/faq");
+        }, 1000);
+      })
+      .catch((error) => {
+        setState({ ...state, error: error, loading: false });
+        message.error(error?.message || "Error deleting description");
+      });
+  };
+  const cancel = (e) => {
+    console.log(e);
+    message.error("Delete cancelled");
   };
 
   const columns = [
@@ -92,6 +173,22 @@ const HomeDesc = () => {
               </form>
             </Modal>
           </Space>
+          <Popconfirm
+            title="Delete the desc"
+            description="Are you sure to delete this desc?"
+            onConfirm={() => confirm(_id._id)}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <AiFillDelete
+              style={{
+                color: "#eb1d0f",
+                marginLeft: "15px",
+              }}
+              size={18}
+            />
+          </Popconfirm>
         </Row>
       ),
     },
@@ -121,18 +218,13 @@ const HomeDesc = () => {
         });
         message.success("Successfully updated description");
         setTimeout(() => {
-          navigate("/");
-          window.location.reload();
+          navigate("/api/dashboard");
         }, 1000);
       })
       .catch((error) => {
         // Update the state with the error
         setState({ ...state, updateLoading: false });
-        message.error("Error updating description");
-        setTimeout(() => {
-          navigate("/");
-          window.location.reload();
-        }, 1000);
+        message.error(error?.message || "Error updating description");
       });
   };
 
@@ -153,8 +245,36 @@ const HomeDesc = () => {
             <img src={Admin} alt="profile" />
           </div>
         </div>
-        <div className="content-container">
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+          className="content-container"
+        >
           <h1>Action to your home-description</h1>
+          <Button type="primary" onClick={showModal}>
+            Add
+          </Button>
+          <Modal
+            title="Add Description"
+            open={isModalOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+          >
+            <form>
+              <label>Description</label>
+              <TextArea
+                type="text"
+                placeholder="Home description"
+                onChange={(e) => handleAdd("description", e.target.value)}
+                value={state.newDesc.description}
+                required
+                rows={6}
+                name="description"
+              />
+            </form>
+          </Modal>
         </div>
       </div>
       <Table className="data-table" dataSource={mappedData} columns={columns} />

@@ -104,18 +104,13 @@ const Afaq = () => {
         });
         message.success("Successfully updated faq");
         setTimeout(() => {
-          navigate("/");
-          window.location.reload();
+          navigate("/api/dashboard");
         }, 1000);
       })
       .catch((error) => {
         // Update the state with the error
         setState({ ...state, updateLoading: false });
-        message.error("Error updating faq");
-        setTimeout(() => {
-          navigate("/");
-          window.location.reload();
-        }, 1000);
+        message.error(error?.message || "Error updating faq");
       });
   };
 

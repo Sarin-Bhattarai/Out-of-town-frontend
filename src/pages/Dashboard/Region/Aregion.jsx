@@ -134,7 +134,7 @@ const Aregion = () => {
       })
       .catch((error) => {
         setState({ ...state, updateLoading: false });
-        message.error("Error updating region");
+        message.error(error?.message || "Error updating region");
       });
   };
 
