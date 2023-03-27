@@ -10,6 +10,8 @@ import {
   MdNature,
   MdReorder,
   MdVerified,
+  MdAssistant,
+  MdOutlineBuild,
 } from "react-icons/md";
 import HomeDesc from "./homeDesc/HomeDesc";
 import Afaq from "./Faq/Afaq";
@@ -57,6 +59,16 @@ const Dashboard = () => {
       key: "/api/dashboard/subRegion",
       icon: <MdNature />,
       label: "SubRegion",
+    },
+    {
+      key: "/api/dashboard/furtherDetails",
+      icon: <MdAssistant />,
+      label: "FurtherDetails",
+    },
+    {
+      key: "/api/dashboard/others",
+      icon: <MdOutlineBuild />,
+      label: "Others",
     },
   ];
 

@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import "./subregion.css";
 import { getSubRegion } from "../../utils/api/subregionApi";
 import ShowImage from "../../utils/data/showImage";
+import { useNavigate } from "react-router-dom";
 
 const SubRegion = () => {
   const [state, setState] = useState({
     subRegions: [],
     error: null,
   });
-
+  const navigate = useNavigate();
   const fetchSubRegions = () => {
     setState({ ...state, error: null });
     getSubRegion()
@@ -42,7 +43,14 @@ const SubRegion = () => {
                     <ShowImage region={sr?.image?.[1]} url="uploads" />
                     <ShowImage region={sr?.image?.[2]} url="uploads" />
                   </div>
-
+                  <button
+                    onClick={() => {
+                      navigate("/trekking/subRegions/furtherDetails");
+                    }}
+                    className="subregion-btn"
+                  >
+                    Trekking Days
+                  </button>
                   <div className="region-row">
                     <div>
                       <h3

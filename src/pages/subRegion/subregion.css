@@ -26,6 +26,7 @@
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 30px;
   margin-top: 50px;
+  margin-bottom: 40px;
 }
 
 .region-row {
@@ -33,4 +34,16 @@
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 40px;
   margin-top: 50px;
+}
+
+.subregion-btn {
+  padding: 8px 24px;
+  background-color: #674bae;
+  border: 1px solid #674bae;
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+  cursor: pointer;
+  width: 20%;
+  margin-left: 38%;
 }
