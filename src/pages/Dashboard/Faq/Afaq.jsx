@@ -121,7 +121,7 @@ const Afaq = () => {
       .then((faq) => {
         message.success("Faq deleted");
         setTimeout(() => {
-          navigate("/faq");
+          navigate("/api/dashboard");
         }, 1000);
       })
       .catch((error) => {

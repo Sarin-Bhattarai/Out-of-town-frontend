@@ -37,10 +37,13 @@ const Ateam = () => {
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const handleOk = () => {
+  const handleOk = (e) => {
+    e.preventDefault();
+    setState({ ...state }, clickSubmit());
     setIsModalOpen(false);
   };
   const handleCancel = () => {
+    setState({ ...state, newTeam: "" });
     setIsModalOpen(false);
   };
 
@@ -107,6 +110,54 @@ const Ateam = () => {
     });
   };
 
+  const handleEditImageUpload = (id, name, role, image) => {
+    setState({ ...state, updateLoading: true });
+    editTeam(id, name, role, image)
+      .then((response) => {
+        const updatedTeams = state?.teams?.map((team) => {
+          if (team._id === id) {
+            return response?.data;
+          } else {
+            return team;
+          }
+        });
+        setState({
+          ...state,
+          teams: updatedTeams,
+          updateLoading: false,
+          modalVisible: false,
+          newTeam: {}, // reset the newTeam object in state
+        });
+        message.success("Successfully updated team");
+        setTimeout(() => {
+          navigate("/api/dashboard");
+        }, 1000);
+      })
+      .catch((error) => {
+        setState({ ...state, updateLoading: false });
+        message.error(error?.message || "Error updating team");
+      });
+  };
+
+  //for delete process
+  const confirm = (id) => {
+    deleteTeam(id)
+      .then((team) => {
+        message.success("Team deleted");
+        setTimeout(() => {
+          navigate("/api/dashboard");
+        }, 1000);
+      })
+      .catch((error) => {
+        setState({ ...state, error: error, loading: false });
+        message.error(error?.message || "Error deleting team");
+      });
+  };
+  const cancel = (e) => {
+    console.log(e);
+    message.error("Delete cancelled");
+  };
+
   const columns = [
     {
       title: "Id",
@@ -138,7 +189,7 @@ const Ateam = () => {
       title: "Actions",
       dataIndex: "action",
       key: "action",
-      render: (_) => (
+      render: (_, _id) => (
         <Row
           style={{
             gap: "0.2rem",
@@ -149,7 +200,19 @@ const Ateam = () => {
               style={{
                 border: "none",
               }}
-              onClick={() => setState({ ...state, modalVisible: true })}
+              onClick={() =>
+                setState({
+                  ...state,
+                  newTeam: {
+                    ...state.newTeam,
+                    id: _id._id,
+                  },
+                  modalVisible: {
+                    ...state.modalVisible,
+                    [_id._id]: true,
+                  },
+                })
+              }
             >
               <AiFillEdit
                 style={{
@@ -162,47 +225,84 @@ const Ateam = () => {
               title="Edit Team"
               okText="Edit"
               style={{ top: 20 }}
-              visible={state.modalVisible}
-              // okButtonProps={{ loading: state.updateLoading }}
-              // onOk={(e) => {
-              //   e.preventDefault();
-              //   submitDesc();
-              //   setState({ ...state, modalVisible: false });
-              // }}
+              visible={state.modalVisible[_id._id]}
+              okButtonProps={{ loading: state.updateLoading }}
+              onOk={(e) => {
+                e.preventDefault();
+                const team = state?.teams?.find((el) => el._id === _id._id);
+                const { name, role, image } = team;
+                handleEditImageUpload(_id._id, name, role, newImage || image);
+                setState({ ...state, modalVisible: false });
+              }}
               onCancel={() => setState({ ...state, modalVisible: false })}
             >
               <form>
                 <label>Name</label>
                 <TextArea
                   rows={2}
-                  value={state?.teams?.map((element) => element?.name)}
+                  onChange={(e) =>
+                    handleSubmit("name", _id._id, e.target.value)
+                  }
+                  value={
+                    state?.teams?.find((el) => el._id === _id._id)?.name || ""
+                  }
                   name="name"
                 />
                 <label>Role</label>
                 <TextArea
                   rows={2}
-                  // onChange={(e) =>
-                  //   handleChange("description", e.target.value)
-                  // }
-                  value={state?.teams?.map((element) => element?.role)}
+                  onChange={(e) => {
+                    handleSubmit("role", _id._id, e.target.value);
+                  }}
+                  value={
+                    state?.teams?.find((el) => el._id === _id._id)?.role || ""
+                  }
                   name="role"
                 />
                 <br />
                 <br />
-                <Upload>
+                <Upload
+                  accept="image/*"
+                  beforeUpload={(file) => {
+                    handleChange("image", file, true);
+                    return false; // prevent Ant Design from automatically uploading the file
+                  }}
+                  fileList={state?.teams
+                    ?.filter((team) => team._id === _id._id)
+                    ?.map((team) =>
+                      team?.image
+                        ? {
+                            uid: team._id,
+                            name: team?.name,
+                            status: "done",
+                            url: team?.image,
+                          }
+                        : null
+                    )
+                    .filter((team) => team !== null)}
+                  name="image"
+                >
                   <Button icon={<AiOutlineUpload />}>Click to Upload</Button>
                 </Upload>
               </form>
             </Modal>
           </Space>
-
-          <AiFillDelete
-            style={{
-              color: "#eb1d0f",
-              marginLeft: "14px",
-            }}
-            size={18}
-          />
+          <Popconfirm
+            title="Delete team member"
+            description="Are you sure to delete team member?"
+            onConfirm={() => confirm(_id._id)}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <AiFillDelete
+              style={{
+                color: "#eb1d0f",
+                marginLeft: "15px",
+              }}
+              size={18}
+            />
+          </Popconfirm>
         </Row>
       ),
     },
@@ -257,15 +357,40 @@ const Ateam = () => {
           >
             <form>
               <label>Name</label>
-              <TextArea rows={2} name="name" />
+              <TextArea
+                type="text"
+                placeholder="Member name"
+                onChange={(e) => handleChange("name", e.target.value)}
+                value={state.newTeam.name}
+                required
+                rows={2}
+                name="name"
+              />
               <label>Role</label>
-              <TextArea rows={2} name="role" />
+              <TextArea
+                type="text"
+                placeholder="Member role"
+                onChange={(e) => handleChange("role", e.target.value)}
+                value={state.newTeam.role}
+                required
+                rows={2}
+                name="role"
+              />
               <br />
               <br />
               <label>Image</label>
               <br />
               <br />
-              <Upload>
+              <Upload
+                accept="image/*"
+                listType="picture"
+                beforeUpload={(file) => {
+                  handleChange("image", file);
+                  return false;
+                }}
+                fileList={state.newTeam.image ? [state.newTeam.image] : []}
+                name="image"
+              >
                 <Button icon={<AiOutlineUpload />}>Click to Upload</Button>
               </Upload>
             </form>

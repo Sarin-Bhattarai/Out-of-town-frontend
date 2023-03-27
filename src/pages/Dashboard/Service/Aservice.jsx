@@ -153,7 +153,7 @@ const Aservice = () => {
       .then((service) => {
         message.success("Service deleted");
         setTimeout(() => {
-          navigate("/services");
+          navigate("/api/dashboard");
         }, 1000);
       })
       .catch((error) => {
@@ -304,9 +304,6 @@ const Aservice = () => {
                     handleChange("image", fileList, true);
                     return false;
                   }}
-                  fileList={state?.services
-                    ?.filter((service) => service._id === _id._id)
-                    .filter((service) => service !== null)}
                   name="image"
                   multiple={true}
                 >
