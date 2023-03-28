@@ -37,15 +37,21 @@ const Dashboard = () => {
       icon: <MdOutlineWindow />,
       label: "Home Description",
     },
-    {
-      key: "/api/dashboard/faq",
-      icon: <MdOutlineArrowForward />,
-      label: "Faq",
-    },
+
     {
       key: "/api/dashboard/region",
       icon: <MdOutlineMyLocation />,
-      label: "Region",
+      label: "Trekking",
+    },
+    {
+      key: "/api/dashboard/subRegion",
+      icon: <MdNature />,
+      label: "Sub Trek",
+    },
+    {
+      key: "/api/dashboard/furtherDetails",
+      icon: <MdAssistant />,
+      label: "Itinary",
     },
     {
       key: "/api/dashboard/team",
@@ -55,22 +61,17 @@ const Dashboard = () => {
     {
       key: "/api/dashboard/services",
       icon: <MdConstruction />,
-      label: "Services",
+      label: "Social Services",
     },
     {
-      key: "/api/dashboard/subRegion",
-      icon: <MdNature />,
-      label: "SubRegion",
-    },
-    {
-      key: "/api/dashboard/furtherDetails",
-      icon: <MdAssistant />,
-      label: "FurtherDetails",
+      key: "/api/dashboard/faq",
+      icon: <MdOutlineArrowForward />,
+      label: "Faq",
     },
     {
       key: "/api/dashboard/others",
       icon: <MdOutlineBuild />,
-      label: "Others",
+      label: "Other Services",
     },
   ];
 

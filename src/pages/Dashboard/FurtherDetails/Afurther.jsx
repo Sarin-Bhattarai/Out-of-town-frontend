@@ -199,7 +199,7 @@ const Afurther = () => {
               />
             </Button>
             <Modal
-              title="Edit Faq"
+              title="Edit Itinary"
               okText="Edit"
               style={{ top: 20 }}
               visible={state.modalVisible[_id._id]}
@@ -317,7 +317,7 @@ const Afurther = () => {
             Add
           </Button>
           <Modal
-            title="Add Faq"
+            title="Add Itinary"
             open={isModalOpen}
             onOk={handleOk}
             onCancel={handleCancel}

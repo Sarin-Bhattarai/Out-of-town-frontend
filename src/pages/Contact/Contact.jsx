@@ -9,13 +9,18 @@ const { Option, OptGroup } = Select;
 
 const Contact = () => {
   const navigate = useNavigate();
-  const [state, handleSubmit] = useForm("mleayydw");
+  const [state, handleSubmit] = useForm("xaykwvop");
   const [trekkingId, setId] = useState(1);
   if (state.succeeded) {
     return (
-      <div>
-        <p>Thankyou your booking has been placed!</p>;
-      </div>
+      <>
+        <div>
+          <p>Thankyou your booking has been placed!</p>;
+        </div>
+        {setTimeout(() => {
+          navigate("/");
+        }, 1000)}
+      </>
     );
   }
 

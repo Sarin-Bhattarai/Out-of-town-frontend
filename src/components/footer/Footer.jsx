@@ -1,6 +1,8 @@
 import React from "react";
 import "./footer.css";
 import { FaMapMarkerAlt, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
+import { IoLogoWhatsapp } from "react-icons/io";
+import { RiKakaoTalkFill } from "react-icons/ri";
 import moment from "moment";
 import { Row } from "antd";
 import logo from "../../resources/images/logo.jpg";
@@ -56,6 +58,26 @@ const Footer = () => {
             <div className="icon">
               <FaPhoneAlt className="ia" />
               <label>Phone: +977-9825107555</label>
+            </div>
+            <div className="icon">
+              <IoLogoWhatsapp
+                style={{
+                  marginRight: "20px",
+                  fontSize: "30px",
+                  color: "green",
+                }}
+              />
+              <label>WhatsApp: +977-9860531090</label>
+            </div>
+            <div className="icon">
+              <RiKakaoTalkFill
+                style={{
+                  marginRight: "20px",
+                  fontSize: "35px",
+                  color: "#ffe812",
+                }}
+              />
+              <label>Kakao Talk ID: bishowraj</label>
             </div>
             <div className="icon">
               <FaEnvelope className="ia" />

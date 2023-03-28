@@ -4,10 +4,12 @@ import ShowImage from "../../utils/data/showImage";
 import { getOther } from "../../utils/api/otherApi";
 import { useForm } from "@formspree/react";
 import { Form, Input, Button } from "antd";
+import { useNavigate } from "react-router-dom";
 const { TextArea } = Input;
 
 const Other = () => {
-  const [query, handleSubmit] = useForm("mleayydw");
+  const navigate = useNavigate();
+  const [query, handleSubmit] = useForm("xaykwvop");
   const [state, setState] = useState({
     others: [],
     error: null,
@@ -19,9 +21,14 @@ const Other = () => {
 
   if (query.succeeded) {
     return (
-      <div>
-        <p>Thankyou your message has been sent!</p>;
-      </div>
+      <>
+        <div>
+          <p>Thankyou your message has been sent!</p>;
+        </div>
+        {setTimeout(() => {
+          navigate("/");
+        }, 1000)}
+      </>
     );
   }
 
