@@ -1,6 +1,6 @@
 import React from "react";
 import { Image } from "antd";
-const URL = "http://localhost:4000/";
+const URL = "https://out-of-town.onrender.com/";
 
 const SubRegionImage = ({ region, url }) => {
   return (

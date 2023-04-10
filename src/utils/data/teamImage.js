@@ -1,5 +1,5 @@
 import React from "react";
-const URL = "http://localhost:4000/";
+const URL = "https://out-of-town.onrender.com/";
 
 const TeamImage = ({ region, url }) => {
   // console.log(region);
