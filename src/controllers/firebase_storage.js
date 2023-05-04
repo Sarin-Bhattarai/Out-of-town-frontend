@@ -22,6 +22,7 @@ const app = initializeApp(firebaseConfig);
 const firebaseStorage = getStorage(app);
 
 async function handleImageUpload(file, location) {
+  if (!file) return null;
   return new Promise((resolve, reject) => {
     var id = uuidv4();
     const storageRef = ref(firebaseStorage, location);
@@ -58,6 +59,7 @@ async function handleImageUpload(file, location) {
 }
 
 async function handleMultipleImageUploads(files, location) {
+  if (!files) return null;
   return new Promise(async (resolve, reject) => {
     try {
       const uploadPromises = [];

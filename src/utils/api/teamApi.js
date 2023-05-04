@@ -14,7 +14,9 @@ export const postTeam = async (name, role, file) => {
   const formData = new FormData();
   formData.append("name", name);
   formData.append("role", role);
+
   formData.append("image", imageUrl);
+
   return axios.post(`${BaseUrl}/teams`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -27,7 +29,9 @@ export const editTeam = async (id, name, role, file) => {
   const formData = new FormData();
   formData.append("name", name);
   formData.append("role", role);
-  formData.append("image", imageUrl);
+  if (imageUrl !== null) {
+    formData.append("image", imageUrl);
+  }
   return axios.patch(`${BaseUrl}/teams/${id}`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",

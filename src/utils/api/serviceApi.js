@@ -27,7 +27,10 @@ export const editService = async (id, title, description, files) => {
   const formData = new FormData();
   formData.append("title", title);
   formData.append("description", description);
-  formData.append("images", JSON.stringify(imageUrls));
+  if (imageUrls !== null) {
+    formData.append("images", JSON.stringify(imageUrls));
+  }
+
   return axios.patch(`${BaseUrl}/services/${id}`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",

@@ -24,10 +24,14 @@ export const postRegion = async (title, description, file) => {
 
 export const editRegion = async (id, title, description, file) => {
   const imageUrl = await handleImageUpload(file, "regions");
+
   const formData = new FormData();
   formData.append("title", title);
   formData.append("description", description);
-  formData.append("image", imageUrl);
+  if (imageUrl !== null) {
+    formData.append("image", imageUrl);
+  }
+
   return axios.patch(`${BaseUrl}/regions/${id}`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",

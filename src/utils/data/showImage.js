@@ -1,5 +1,4 @@
 import React from "react";
-const URL = "https://out-of-town.onrener.com/";
 
 const ShowImage = ({ region, url }) => {
   // console.log(region);

@@ -25,7 +25,10 @@ export const editOther = async (id, title, file) => {
   const imageUrl = await handleImageUpload(file, "others");
   const formData = new FormData();
   formData.append("title", title);
-  formData.append("image", imageUrl);
+  if (imageUrl !== null) {
+    formData.append("image", imageUrl);
+  }
+
   return axios.patch(`${BaseUrl}/others/${id}`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",

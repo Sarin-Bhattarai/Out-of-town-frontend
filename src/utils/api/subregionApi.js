@@ -43,7 +43,10 @@ export const editSubRegion = async (
   const formData = new FormData();
   formData.append("title", title);
   formData.append("description", description);
-  formData.append("images", JSON.stringify(imageUrls));
+  if (imageUrls !== null) {
+    formData.append("images", JSON.stringify(imageUrls));
+  }
+
   formData.append("includedetails", includedetails);
   formData.append("excludedetails", excludedetails);
   return axios.patch(`${BaseUrl}/subRegions/${id}`, formData, {
