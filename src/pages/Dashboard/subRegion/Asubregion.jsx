@@ -307,7 +307,7 @@ const Asubregion = () => {
                   _id._id,
                   title,
                   description,
-                  newImage || image,
+                  newImage,
                   includedetails,
                   excludedetails
                 );

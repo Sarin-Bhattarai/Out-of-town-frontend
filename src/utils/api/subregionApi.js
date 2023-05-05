@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BaseUrl } from "../../resources/api/config";
+import { handleMultipleImageUploads } from "../../controllers/firebase_storage";
 
 export const getSubRegion = () => {
   return axios({
@@ -8,19 +9,18 @@ export const getSubRegion = () => {
   });
 };
 
-export const postSubRegion = (
+export const postSubRegion = async (
   title,
   description,
   files,
   includedetails,
   excludedetails
 ) => {
+  const imageUrls = await handleMultipleImageUploads(files, "subRegions");
   const formData = new FormData();
   formData.append("title", title);
   formData.append("description", description);
-  files.forEach((file) => {
-    formData.append("image", file);
-  });
+  formData.append("images", JSON.stringify(imageUrls));
   formData.append("includedetails", includedetails);
   formData.append("excludedetails", excludedetails);
   return axios.post(`${BaseUrl}/subRegions`, formData, {
@@ -30,7 +30,7 @@ export const postSubRegion = (
   });
 };
 
-export const editSubRegion = (
+export const editSubRegion = async (
   id,
   title,
   description,
@@ -38,12 +38,15 @@ export const editSubRegion = (
   includedetails,
   excludedetails
 ) => {
+  const imageUrls = await handleMultipleImageUploads(files, "subRegions");
+
   const formData = new FormData();
   formData.append("title", title);
   formData.append("description", description);
-  files.forEach((file) => {
-    formData.append("image", file);
-  });
+  if (imageUrls !== null) {
+    formData.append("images", JSON.stringify(imageUrls));
+  }
+
   formData.append("includedetails", includedetails);
   formData.append("excludedetails", excludedetails);
   return axios.patch(`${BaseUrl}/subRegions/${id}`, formData, {

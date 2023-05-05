@@ -231,7 +231,7 @@ const Ateam = () => {
                 e.preventDefault();
                 const team = state?.teams?.find((el) => el._id === _id._id);
                 const { name, role, image } = team;
-                handleEditImageUpload(_id._id, name, role, newImage || image);
+                handleEditImageUpload(_id._id, name, role, newImage);
                 setState({ ...state, modalVisible: false });
               }}
               onCancel={() => setState({ ...state, modalVisible: false })}
