@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BaseUrl } from "../../resources/api/config";
+import { handleImageUpload } from "../../controllers/firebase_storage";
 
 export const getTeams = () => {
   return axios({
@@ -8,11 +9,14 @@ export const getTeams = () => {
   });
 };
 
-export const postTeam = (name, role, file) => {
+export const postTeam = async (name, role, file) => {
+  const imageUrl = await handleImageUpload(file, "teams");
   const formData = new FormData();
   formData.append("name", name);
   formData.append("role", role);
-  formData.append("image", file);
+
+  formData.append("image", imageUrl);
+
   return axios.post(`${BaseUrl}/teams`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -20,11 +24,14 @@ export const postTeam = (name, role, file) => {
   });
 };
 
-export const editTeam = (id, name, role, file) => {
+export const editTeam = async (id, name, role, file) => {
+  const imageUrl = await handleImageUpload(file, "teams");
   const formData = new FormData();
   formData.append("name", name);
   formData.append("role", role);
-  formData.append("image", file);
+  if (imageUrl !== null) {
+    formData.append("image", imageUrl);
+  }
   return axios.patch(`${BaseUrl}/teams/${id}`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",

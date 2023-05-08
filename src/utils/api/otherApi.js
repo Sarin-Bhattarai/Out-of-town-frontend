@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BaseUrl } from "../../resources/api/config";
+import { handleImageUpload } from "../../controllers/firebase_storage";
 
 export const getOther = () => {
   return axios({
@@ -8,10 +9,11 @@ export const getOther = () => {
   });
 };
 
-export const postOther = (title, file) => {
+export const postOther = async (title, file) => {
+  const imageUrl = await handleImageUpload(file, "others");
   const formData = new FormData();
   formData.append("title", title);
-  formData.append("image", file);
+  formData.append("image", imageUrl);
   return axios.post(`${BaseUrl}/others`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -19,10 +21,14 @@ export const postOther = (title, file) => {
   });
 };
 
-export const editOther = (id, title, file) => {
+export const editOther = async (id, title, file) => {
+  const imageUrl = await handleImageUpload(file, "others");
   const formData = new FormData();
   formData.append("title", title);
-  formData.append("image", file);
+  if (imageUrl !== null) {
+    formData.append("image", imageUrl);
+  }
+
   return axios.patch(`${BaseUrl}/others/${id}`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",

@@ -249,12 +249,7 @@ const Aregion = () => {
                     (el) => el._id === _id._id
                   );
                   const { title, description, image } = region;
-                  handleEditImageUpload(
-                    _id._id,
-                    title,
-                    description,
-                    newImage || image
-                  );
+                  handleEditImageUpload(_id._id, title, description, newImage);
                   setState({ ...state, modalVisible: false });
                 }}
                 onCancel={() => setState({ ...state, modalVisible: false })}
