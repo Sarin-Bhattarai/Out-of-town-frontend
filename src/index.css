@@ -200,6 +200,9 @@ svg {
 /* --------------Responsive--------------  */
 
 @media screen and (max-width: 991px) {
+  .container {
+    padding: 10px;
+  }
   .home-grid {
     grid-template-columns: repeat(1, 1fr) !important;
   }
