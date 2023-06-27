@@ -62,6 +62,14 @@ const Further = () => {
                 >
                   {fu.title}
                 </h1>
+                <p>
+                  {fu?.description?.split("\n")?.map((item, index) => (
+                    <React.Fragment key={index}>
+                      {item}
+                      <br />
+                    </React.Fragment>
+                  ))}
+                </p>
                 <Faq data={data} styles={styles} config={config} />
               </div>
             </>
